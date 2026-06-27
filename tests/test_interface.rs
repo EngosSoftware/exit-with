@@ -58,12 +58,10 @@ fn _0009() {
 #[test]
 fn _0010() {
   cli_assert::command!().arg("0").arg("hello").success().code(0).stdout("hello\n").stderr("").execute();
-  cli_assert::command!().arg("0").arg("hello").success().code(0).stdout("hello\n").stderr("").execute();
 }
 
 #[test]
 fn _0011() {
-  cli_assert::command!().arg("1").arg("hello").failure().code(1).stdout("").stderr("hello\n").execute();
   cli_assert::command!().arg("1").arg("hello").failure().code(1).stdout("").stderr("hello\n").execute();
 }
 
@@ -78,13 +76,17 @@ fn _0012() {
     .stdout("hello\n")
     .stderr("world\n")
     .execute();
+}
+
+#[test]
+fn _0012_() {
   cli_assert::command!()
     .arg("0")
-    .arg("hello")
+    .arg("")
     .arg("world")
     .success()
     .code(0)
-    .stdout("hello\n")
+    .stdout("")
     .stderr("world\n")
     .execute();
 }
@@ -100,29 +102,23 @@ fn _0013() {
     .stdout("world\n")
     .stderr("hello\n")
     .execute();
+}
+
+#[test]
+fn _0013_() {
   cli_assert::command!()
     .arg("1")
-    .arg("hello")
+    .arg("")
     .arg("world")
     .failure()
     .code(1)
     .stdout("world\n")
-    .stderr("hello\n")
+    .stderr("")
     .execute();
 }
 
 #[test]
 fn _0014() {
-  cli_assert::command!()
-    .arg("0")
-    .arg("hello")
-    .arg("world")
-    .arg("!")
-    .success()
-    .code(0)
-    .stdout("hello\n")
-    .stderr("world\n!\n")
-    .execute();
   cli_assert::command!()
     .arg("0")
     .arg("hello")
@@ -147,14 +143,34 @@ fn _0015() {
     .stdout("world\n!\n")
     .stderr("hello\n")
     .execute();
+}
+
+#[test]
+fn _0015_() {
+  cli_assert::command!()
+    .arg("0")
+    .arg("hello")
+    .arg("world")
+    .arg("")
+    .arg("")
+    .success()
+    .code(0)
+    .stdout("hello\n")
+    .stderr("world\n")
+    .execute();
+}
+
+#[test]
+fn _0015_1() {
   cli_assert::command!()
     .arg("1")
     .arg("hello")
     .arg("world")
-    .arg("!")
+    .arg("")
+    .arg("")
     .failure()
     .code(1)
-    .stdout("world\n!\n")
+    .stdout("world\n")
     .stderr("hello\n")
     .execute();
 }
