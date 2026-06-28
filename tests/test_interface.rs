@@ -79,7 +79,7 @@ fn _0012() {
 }
 
 #[test]
-fn _0012_() {
+fn _0013() {
   cli_assert::command!()
     .arg("0")
     .arg("")
@@ -92,7 +92,7 @@ fn _0012_() {
 }
 
 #[test]
-fn _0013() {
+fn _0014() {
   cli_assert::command!()
     .arg("1")
     .arg("hello")
@@ -105,7 +105,7 @@ fn _0013() {
 }
 
 #[test]
-fn _0013_() {
+fn _0015() {
   cli_assert::command!()
     .arg("1")
     .arg("")
@@ -118,7 +118,7 @@ fn _0013_() {
 }
 
 #[test]
-fn _0014() {
+fn _0016() {
   cli_assert::command!()
     .arg("0")
     .arg("hello")
@@ -132,7 +132,7 @@ fn _0014() {
 }
 
 #[test]
-fn _0015() {
+fn _0017() {
   cli_assert::command!()
     .arg("1")
     .arg("hello")
@@ -146,7 +146,7 @@ fn _0015() {
 }
 
 #[test]
-fn _0015_() {
+fn _0018() {
   cli_assert::command!()
     .arg("0")
     .arg("hello")
@@ -161,7 +161,7 @@ fn _0015_() {
 }
 
 #[test]
-fn _0015_1() {
+fn _0019() {
   cli_assert::command!()
     .arg("1")
     .arg("hello")
