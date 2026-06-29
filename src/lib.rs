@@ -1,26 +1,50 @@
+fn content(text: String) -> String {
+  let path = std::path::Path::new(&text);
+  if path.is_file()
+    && let Ok(text) = std::fs::read_to_string(path)
+  {
+    return text;
+  }
+  format!("{}\n", text)
+}
+
+fn p_out(text: String) {
+  if !text.is_empty() {
+    print!("{}", content(text));
+  }
+}
+
+fn p_err(text: String) {
+  if !text.is_empty() {
+    eprint!("{}", content(text));
+  }
+}
+
 pub fn run() -> i32 {
   let mut args = std::env::args().skip(1);
   if let Some(arg) = args.next() {
-    let exit_code = arg.parse::<i32>().unwrap_or_default();
-    if let Some(arg) = args.next()
-      && !arg.is_empty()
-    {
-      if exit_code == 0 {
-        println!("{}", arg);
-      } else {
-        eprintln!("{}", arg);
-      }
-    }
-    for arg in args {
-      if !arg.is_empty() {
+    if let Ok(exit_code) = arg.parse::<i32>() {
+      if let Some(arg) = args.next() {
         if exit_code == 0 {
-          eprintln!("{}", arg);
+          p_out(arg);
         } else {
-          println!("{}", arg);
+          p_err(arg);
         }
       }
+      for arg in args {
+        if exit_code == 0 {
+          p_err(arg);
+        } else {
+          p_out(arg);
+        }
+      }
+      return exit_code;
+    } else {
+      p_out(arg);
+      for arg in args {
+        p_err(arg);
+      }
     }
-    return exit_code;
   }
   0
 }
