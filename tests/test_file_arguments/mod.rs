@@ -1,12 +1,20 @@
-#[cfg(unix)]
-const A: &[u8; 2] = b"a\x0A";
-
-#[cfg(windows)]
-const A: &[u8; 3] = b"a\x0D\x0A";
+fn n(input: &str) -> String {
+  let mut buffer = String::with_capacity(10);
+  for ch in input.chars() {
+    if ch == '\n' {
+      #[cfg(windows)]
+      buffer.push('\x0d');
+      buffer.push('\x0a');
+    } else {
+      buffer.push(ch);
+    }
+  }
+  buffer
+}
 
 #[test]
 fn _0001() {
-  cli_assert::command!().arg("a.txt").success().code(0).stdout(A).stderr("").execute();
+  cli_assert::command!().arg("a.txt").success().code(0).stdout(n("a\n")).stderr("").execute();
 }
 
 #[test]
