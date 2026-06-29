@@ -19,17 +19,24 @@ fn _0001() {
 
 #[test]
 fn _0002() {
-  cli_assert::command!().arg("a.txt").arg("b.txt").success().code(0).stdout("a\n").stderr("b\n").execute();
+  cli_assert::command!()
+    .arg("a.txt")
+    .arg("b.txt")
+    .success()
+    .code(0)
+    .stdout(n("a\n"))
+    .stderr(n("b\n"))
+    .execute();
 }
 
 #[test]
 fn _0003() {
-  cli_assert::command!().arg("x").arg("b.txt").success().code(0).stdout("x\n").stderr("b\n").execute();
+  cli_assert::command!().arg("x").arg("b.txt").success().code(0).stdout(n("x\n")).stderr(n("b\n")).execute();
 }
 
 #[test]
 fn _0004() {
-  cli_assert::command!().arg("a.txt").arg("y").success().code(0).stdout("a\n").stderr("y\n").execute();
+  cli_assert::command!().arg("a.txt").arg("y").success().code(0).stdout(n("a\n")).stderr(n("y\n")).execute();
 }
 
 #[test]
@@ -40,8 +47,8 @@ fn _0005() {
     .arg("c.txt")
     .success()
     .code(0)
-    .stdout("a\n")
-    .stderr("b\nc\n")
+    .stdout(n("a\n"))
+    .stderr(n("b\nc\n"))
     .execute();
 }
 
@@ -53,14 +60,14 @@ fn _0006() {
     .arg("z")
     .success()
     .code(0)
-    .stdout("a\n")
-    .stderr("b\nz\n")
+    .stdout(n("a\n"))
+    .stderr(n("b\nz\n"))
     .execute();
 }
 
 #[test]
 fn _0007() {
-  cli_assert::command!().arg("1").arg("a.txt").failure().code(1).stdout("").stderr("a\n").execute();
+  cli_assert::command!().arg("1").arg("a.txt").failure().code(1).stdout("").stderr(n("a\n")).execute();
 }
 
 #[test]
@@ -71,8 +78,8 @@ fn _0008() {
     .arg("b.txt")
     .failure()
     .code(1)
-    .stdout("b\n")
-    .stderr("a\n")
+    .stdout(n("b\n"))
+    .stderr(n("a\n"))
     .execute();
 }
 
@@ -84,8 +91,8 @@ fn _0009() {
     .arg("b.txt")
     .failure()
     .code(1)
-    .stdout("b\n")
-    .stderr("x\n")
+    .stdout(n("b\n"))
+    .stderr(n("x\n"))
     .execute();
 }
 
@@ -97,8 +104,8 @@ fn _0010() {
     .arg("y")
     .failure()
     .code(1)
-    .stdout("y\n")
-    .stderr("a\n")
+    .stdout(n("y\n"))
+    .stderr(n("a\n"))
     .execute();
 }
 
@@ -111,8 +118,8 @@ fn _0011() {
     .arg("c.txt")
     .failure()
     .code(1)
-    .stdout("b\nc\n")
-    .stderr("a\n")
+    .stdout(n("b\nc\n"))
+    .stderr(n("a\n"))
     .execute();
 }
 
@@ -125,8 +132,8 @@ fn _0012() {
     .arg("z")
     .failure()
     .code(1)
-    .stdout("b\nz\n")
-    .stderr("a\n")
+    .stdout(n("b\nz\n"))
+    .stderr(n("a\n"))
     .execute();
 }
 
@@ -144,13 +151,10 @@ fn _0014() {
 
 #[test]
 fn _0015() {
+  #[cfg(unix)]
+  let expected = b"\x1b[31merror\x1b[0m\x0a";
+  #[cfg(windows)]
+  let expected = b"\x1b[31merror\x1b[0m\x0d\x0a";
   // Output is colored.
-  cli_assert::command!()
-    .arg("1")
-    .arg("color.txt")
-    .failure()
-    .code(1)
-    .stdout("")
-    .stderr(b"\x1b[31merror\x1b[0m\n")
-    .execute();
+  cli_assert::command!().arg("1").arg("color.txt").failure().code(1).stdout("").stderr(expected).execute();
 }
