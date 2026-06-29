@@ -1,9 +1,12 @@
+#[cfg(unix)]
+const A: &[u8; 2] = b"a\x0A";
+
+#[cfg(windows)]
+const A: &[u8; 3] = b"a\x0D\x0A";
+
 #[test]
 fn _0001() {
-  #[cfg(unix)]
-  cli_assert::command!().arg("a.txt").success().code(0).stdout("a\n").stderr("").execute();
-  #[cfg(windows)]
-  cli_assert::command!().arg("a.txt").success().code(0).stdout(b"a\x13\x10").stderr("").execute();
+  cli_assert::command!().arg("a.txt").success().code(0).stdout(A).stderr("").execute();
 }
 
 #[test]
