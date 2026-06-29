@@ -1,5 +1,5 @@
 [book]
 title = "exit-with"
 authors = ["Dariusz Depta"]
-description = "Exit with code, stdio & stderr"
+description = "Exit with code, stdout & stderr"
 language = "en"

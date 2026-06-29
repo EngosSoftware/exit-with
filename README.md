@@ -37,7 +37,7 @@
 [es-url]: https://engos.de
 [repository-url]: https://github.com/EngosSoftware/exit-with
 
-# Exit with code, stdio & stderr
+# Exit with code, stdout & stderr
 
 ## Overview
 

@@ -1,4 +1,4 @@
-# Exit with code, stdio & stderr
+# Exit with code, stdout & stderr
 
 ## Overview
 
