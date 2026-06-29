@@ -1,42 +1,37 @@
-fn n(input: &str) -> String {
-  let mut buffer = String::with_capacity(10);
-  for ch in input.chars() {
-    if ch == '\n' {
-      #[cfg(windows)]
-      buffer.push('\x0d');
-      buffer.push('\x0a');
-    } else {
-      buffer.push(ch);
-    }
-  }
-  buffer
+#[cfg(unix)]
+mod exp {
+  pub const A: &[u8; 2] = b"a\x0a";
+  pub const B: &[u8; 2] = b"b\x0a";
+  pub const BC: &[u8; 4] = b"b\x0ac\x0a";
+  pub const BZ: &[u8; 4] = b"b\x0az\x0a";
+}
+
+#[cfg(windows)]
+mod exp {
+  pub const A: &[u8; 3] = b"a\x0d\x0a";
+  pub const B: &[u8; 3] = b"b\x0d\x0a";
+  pub const BC: &[u8; 6] = b"b\x0d\x0ac\x0d\x0a";
+  pub const BZ: &[u8; 5] = b"b\x0d\x0az\x0a";
 }
 
 #[test]
 fn _0001() {
-  cli_assert::command!().arg("a.txt").success().code(0).stdout(n("a\n")).stderr("").execute();
+  cli_assert::command!().arg("a.txt").success().code(0).stdout(exp::A).stderr("").execute();
 }
 
 #[test]
 fn _0002() {
-  cli_assert::command!()
-    .arg("a.txt")
-    .arg("b.txt")
-    .success()
-    .code(0)
-    .stdout(n("a\n"))
-    .stderr(n("b\n"))
-    .execute();
+  cli_assert::command!().arg("a.txt").arg("b.txt").success().code(0).stdout(exp::A).stderr(exp::B).execute();
 }
 
 #[test]
 fn _0003() {
-  cli_assert::command!().arg("x").arg("b.txt").success().code(0).stdout(n("x\n")).stderr(n("b\n")).execute();
+  cli_assert::command!().arg("x").arg("b.txt").success().code(0).stdout("x\n").stderr(exp::B).execute();
 }
 
 #[test]
 fn _0004() {
-  cli_assert::command!().arg("a.txt").arg("y").success().code(0).stdout(n("a\n")).stderr(n("y\n")).execute();
+  cli_assert::command!().arg("a.txt").arg("y").success().code(0).stdout(exp::A).stderr("y\n").execute();
 }
 
 #[test]
@@ -47,8 +42,8 @@ fn _0005() {
     .arg("c.txt")
     .success()
     .code(0)
-    .stdout(n("a\n"))
-    .stderr(n("b\nc\n"))
+    .stdout(exp::A)
+    .stderr(exp::BC)
     .execute();
 }
 
@@ -60,14 +55,14 @@ fn _0006() {
     .arg("z")
     .success()
     .code(0)
-    .stdout(n("a\n"))
-    .stderr(n("b\nz\n"))
+    .stdout(exp::A)
+    .stderr(exp::BZ)
     .execute();
 }
 
 #[test]
 fn _0007() {
-  cli_assert::command!().arg("1").arg("a.txt").failure().code(1).stdout("").stderr(n("a\n")).execute();
+  cli_assert::command!().arg("1").arg("a.txt").failure().code(1).stdout("").stderr(exp::A).execute();
 }
 
 #[test]
@@ -78,8 +73,8 @@ fn _0008() {
     .arg("b.txt")
     .failure()
     .code(1)
-    .stdout(n("b\n"))
-    .stderr(n("a\n"))
+    .stdout(exp::B)
+    .stderr(exp::A)
     .execute();
 }
 
@@ -91,8 +86,8 @@ fn _0009() {
     .arg("b.txt")
     .failure()
     .code(1)
-    .stdout(n("b\n"))
-    .stderr(n("x\n"))
+    .stdout(exp::B)
+    .stderr("x\n")
     .execute();
 }
 
@@ -104,8 +99,8 @@ fn _0010() {
     .arg("y")
     .failure()
     .code(1)
-    .stdout(n("y\n"))
-    .stderr(n("a\n"))
+    .stdout("y\n")
+    .stderr(exp::A)
     .execute();
 }
 
@@ -118,8 +113,8 @@ fn _0011() {
     .arg("c.txt")
     .failure()
     .code(1)
-    .stdout(n("b\nc\n"))
-    .stderr(n("a\n"))
+    .stdout(exp::BC)
+    .stderr(exp::A)
     .execute();
 }
 
@@ -132,8 +127,8 @@ fn _0012() {
     .arg("z")
     .failure()
     .code(1)
-    .stdout(n("b\nz\n"))
-    .stderr(n("a\n"))
+    .stdout(exp::BZ)
+    .stderr(exp::A)
     .execute();
 }
 
@@ -152,9 +147,9 @@ fn _0014() {
 #[test]
 fn _0015() {
   #[cfg(unix)]
-  let expected = b"\x1b[31merror\x1b[0m\x0a";
+  let err = b"\x1b[31merror\x1b[0m\x0a";
   #[cfg(windows)]
-  let expected = b"\x1b[31merror\x1b[0m\x0d\x0a";
+  let err = b"\x1b[31merror\x1b[0m\x0d\x0a";
   // Output is colored.
-  cli_assert::command!().arg("1").arg("color.txt").failure().code(1).stdout("").stderr(expected).execute();
+  cli_assert::command!().arg("1").arg("color.txt").failure().code(1).stdout("").stderr(err).execute();
 }
