@@ -153,3 +153,21 @@ fn _0015() {
   // Output is colored.
   cli_assert::command!().arg("1").arg("color.txt").failure().code(1).stdout("").stderr(err).execute();
 }
+
+#[test]
+fn _0016() {
+  // Exit code (success) is in the file.
+  cli_assert::command!().arg("code_0.txt").success().code(0).stdout("").stderr("").execute();
+}
+
+#[test]
+fn _0017() {
+  // Exit code (failure) is in the file.
+  cli_assert::command!().arg("code_9.txt").failure().code(9).stdout("").stderr("").execute();
+}
+
+#[test]
+fn _0018() {
+  // Invalid exit code is in the file.
+  cli_assert::command!().arg("code_invalid.txt").success().code(0).stdout("code\n").stderr("").execute();
+}

@@ -3,6 +3,13 @@
 
 .tasks
 
+  .all
+    .task clean
+    .task build
+    .task clippy
+    .task test
+    .task cov
+
   .build
     .desc Builds in debug mode
     .cmd cargo +stable build
@@ -54,7 +61,8 @@
 
   .manual
     .desc Builds the manual from its markdown files
-    .cmd cd manual && mdbook build
+    .cmd mdbook build
+      .dir manual
 
   .readme
     .desc Recreates README file
@@ -65,7 +73,8 @@
 
   .serve
     .desc Serves manual locally
-    .cmd cd manual && mdbook serve
+    .cmd mdbook serve
+      .dir manual
 
   .test
     .desc Runs tests in debug mode
