@@ -169,5 +169,9 @@ fn _0017() {
 #[test]
 fn _0018() {
   // Invalid exit code is in the file.
-  cli_assert::command!().arg("code_invalid.txt").success().code(0).stdout("code\n").stderr("").execute();
+  #[cfg(unix)]
+  let out = b"code\x0a";
+  #[cfg(windows)]
+  let out = b"code\x0d\x0a";
+  cli_assert::command!().arg("code_invalid.txt").success().code(0).stdout(out).stderr("").execute();
 }
