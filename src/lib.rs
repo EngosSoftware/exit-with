@@ -1,7 +1,7 @@
 #![deny(missing_docs)]
 #![deny(rustdoc::broken_intra_doc_links)]
 #![deny(rustdoc::missing_crate_level_docs)]
-#![doc = include_str!("../docs/lib.md")]
+#![doc = include_str!("../docs/lib.rs.md")]
 
 fn content(text: &str, suffix: Option<&str>) -> String {
     let path = std::path::Path::new(&text);

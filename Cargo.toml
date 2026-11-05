@@ -1,6 +1,6 @@
 [package]
 name = "exit-with"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["Dariusz Depta <depta@engos.de>"]
 description = "Exit with code, stdout & stderr"
 documentation = "https://docs.rs/exit-with"
@@ -13,8 +13,7 @@ edition = "2024"
 license = "MIT OR Apache-2.0"
 include = [
     "src/**",
-    "tests/**",
-    "docs/**",
+    "docs/*.rs.md",
     "Cargo.lock",
     "Cargo.toml",
     "LICENSE*",
