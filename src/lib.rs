@@ -13,15 +13,10 @@ fn content(text: &str, suffix: Option<&str>) -> String {
     format!("{}{}", text, suffix.unwrap_or_default())
 }
 
-fn p_out(text: &str) {
+fn print(w: &mut impl std::io::Write, text: &str) {
     if !text.is_empty() {
-        print!("{}", content(text, Some("\n")));
-    }
-}
-
-fn p_err(text: &str) {
-    if !text.is_empty() {
-        eprint!("{}", content(text, Some("\n")));
+        _ = w.write_all(content(text, Some("\n")).as_bytes());
+        _ = w.flush();
     }
 }
 
@@ -30,26 +25,28 @@ fn p_err(text: &str) {
 pub fn run() -> i32 {
     let mut args = std::env::args().skip(1);
     if let Some(arg) = args.next() {
+        let mut out = std::io::stdout().lock();
+        let mut err = std::io::stderr().lock();
         if let Ok(exit_code) = content(&arg, None).trim().parse::<i32>() {
             if let Some(arg) = args.next() {
                 if exit_code == 0 {
-                    p_out(&arg);
+                    print(&mut out, &arg);
                 } else {
-                    p_err(&arg);
+                    print(&mut err, &arg);
                 }
             }
             for arg in args {
                 if exit_code == 0 {
-                    p_err(&arg);
+                    print(&mut err, &arg);
                 } else {
-                    p_out(&arg);
+                    print(&mut out, &arg);
                 }
             }
             return exit_code;
         }
-        p_out(&arg);
+        print(&mut out, &arg);
         for arg in args {
-            p_err(&arg);
+            print(&mut err, &arg);
         }
     }
     0
