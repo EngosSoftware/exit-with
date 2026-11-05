@@ -13,8 +13,8 @@
 [docs-badge]: https://docs.rs/exit-with/badge.svg
 [docs-url]: https://docs.rs/exit-with
 [cov-badge]: https://img.shields.io/badge/coverage-100%25-21b577.svg
-[license-badge]: https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-9370DB.svg
-[human-badge]: https://img.shields.io/badge/made%20by-HUMAN-F5DEB3.svg
+[license-badge]: https://img.shields.io/badge/license-MIT_OR_Apache--2.0-9370DB.svg
+[human-badge]: https://img.shields.io/badge/made_by-HUMAN-F5DEB3.svg
 
 # Exit with code, stdout & stderr
 
