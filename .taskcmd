@@ -1,5 +1,8 @@
 .note To use these task definitions, run:
-      cargo install taskcmd
+      `cargo install taskcmd`
+
+.vars
+  .RUST_TOOLCHAIN +1.88.0
 
 .tasks
 
@@ -13,52 +16,52 @@
 
   .build
     .desc Builds in debug mode
-    .cmd cargo +stable build
+    .cmd cargo {{RUST_TOOLCHAIN}} build
 
   .clean
     .desc Cleans all
     .cmd rm -rf manual/book
-    .cmd cargo +stable clean
+    .cmd cargo {{RUST_TOOLCHAIN}} clean
 
   .clippy
     .desc Runs linter
-    .cmd cargo +stable clippy --all-targets -- -D warnings
+    .cmd cargo {{RUST_TOOLCHAIN}} clippy --all-targets -- -D warnings
 
   .cov
     .desc Generates code coverage report in text format
-    .cmd cargo +stable llvm-cov clean
-    .cmd cargo +stable llvm-cov --no-cfg-coverage
+    .cmd cargo {{RUST_TOOLCHAIN}} llvm-cov clean
+    .cmd cargo {{RUST_TOOLCHAIN}} llvm-cov --no-cfg-coverage
 
   .cov-html
     .desc Generates code coverage report in HTML format
-    .cmd cargo +stable llvm-cov clean
-    .cmd cargo +stable llvm-cov --no-cfg-coverage --html
+    .cmd cargo {{RUST_TOOLCHAIN}} llvm-cov clean
+    .cmd cargo {{RUST_TOOLCHAIN}} llvm-cov --no-cfg-coverage --html
 
   .cov-html-open
     .desc Generates code coverage report in HTML format and opens in browser
-    .cmd cargo +stable llvm-cov clean
-    .cmd cargo +stable llvm-cov --no-cfg-coverage --html --open
+    .cmd cargo {{RUST_TOOLCHAIN}} llvm-cov clean
+    .cmd cargo {{RUST_TOOLCHAIN}} llvm-cov --no-cfg-coverage --html --open
 
   .cov-badge
     .desc Generates code coverage badge
-    .cmd cargo +stable llvm-cov clean
-    .cmd cargo +stable llvm-cov --no-cfg-coverage --json --summary-only | coverio -l coverage -c --tag cov-badge
+    .cmd cargo {{RUST_TOOLCHAIN}} llvm-cov clean
+    .cmd cargo {{RUST_TOOLCHAIN}} llvm-cov --no-cfg-coverage --json --summary-only | coverio -l coverage -c --tag cov-badge
 
   .doc
     .desc Generates documentation
-    .cmd cargo +stable doc --no-deps
+    .cmd cargo {{RUST_TOOLCHAIN}} doc --no-deps
 
   .doc-open
     .desc Generates documentation and opens in browser
-    .cmd cargo +stable doc --no-deps --open
+    .cmd cargo {{RUST_TOOLCHAIN}} doc --no-deps --open
 
   .fmt
     .desc Runs code formatter
-    .cmd cargo +nightly fmt
+    .cmd cargo {{RUST_TOOLCHAIN}} fmt
 
   .install
     .desc Installs task commander from local sources
-    .cmd cargo +stable install exit-with --path . --force
+    .cmd cargo {{RUST_TOOLCHAIN}} install exit-with --path . --force
 
   .manual
     .desc Builds the manual from its markdown files
@@ -67,7 +70,7 @@
 
   .pedantic
       .desc Runs pedantic linter
-      .cmd cargo +stable clippy --all-targets -- -D warnings -W clippy::pedantic -W clippy::nursery
+      .cmd cargo {{RUST_TOOLCHAIN}} clippy --all-targets -- -D warnings -W clippy::pedantic -W clippy::nursery
 
   .readme
     .desc Recreates README file
@@ -83,12 +86,12 @@
 
   .test
     .desc Runs tests in debug mode
-    .cmd cargo +stable test
+    .cmd cargo {{RUST_TOOLCHAIN}} test
 
   .testn
     .desc Runs tests in debug mode using nextest
-    .cmd cargo +stable nextest run
+    .cmd cargo {{RUST_TOOLCHAIN}} nextest run
 
   .uninstall
     .desc Uninstalls previously installed task commander
-    .cmd cargo +stable uninstall exit-with
+    .cmd cargo {{RUST_TOOLCHAIN}} uninstall exit-with
