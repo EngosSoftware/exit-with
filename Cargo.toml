@@ -8,17 +8,17 @@ repository = "https://github.com/EngosSoftware/exit-with.git"
 keywords = ["exit", "with", "code", "stdout", "stderr"]
 homepage = "https://engossoftware.github.io/exit-with/"
 categories = ["command-line-utilities"]
+rust-version = "1.85.0"
 edition = "2024"
 license = "MIT OR Apache-2.0"
 include = [
-    "docs/**",
     "src/**",
     "tests/**",
+    "docs/**",
     "Cargo.lock",
     "Cargo.toml",
     "LICENSE*",
-    "NOTICE",
-    "/README.md"
+    "README.md"
 ]
 
 [dev-dependencies]

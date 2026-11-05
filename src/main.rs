@@ -1,3 +1,6 @@
+use exit_with::run;
+use std::process::exit;
+
 fn main() {
-    std::process::exit(exit_with::run());
+    exit(run());
 }

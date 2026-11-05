@@ -1,3 +1,8 @@
+#![deny(missing_docs)]
+#![deny(rustdoc::broken_intra_doc_links)]
+#![deny(rustdoc::missing_crate_level_docs)]
+#![doc = include_str!("../docs/lib.md")]
+
 fn content(text: &str, suffix: Option<&str>) -> String {
     let path = std::path::Path::new(&text);
     if path.is_file()
@@ -20,6 +25,8 @@ fn p_err(text: &str) {
     }
 }
 
+/// Runs the application.
+#[must_use]
 pub fn run() -> i32 {
     let mut args = std::env::args().skip(1);
     if let Some(arg) = args.next() {
@@ -39,11 +46,10 @@ pub fn run() -> i32 {
                 }
             }
             return exit_code;
-        } else {
-            p_out(&arg);
-            for arg in args {
-                p_err(&arg);
-            }
+        }
+        p_out(&arg);
+        for arg in args {
+            p_err(&arg);
         }
     }
     0

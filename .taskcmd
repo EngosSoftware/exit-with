@@ -7,6 +7,7 @@
     .task clean
     .task build
     .task clippy
+    .task pedantic
     .task test
     .task cov
 
@@ -21,7 +22,7 @@
 
   .clippy
     .desc Runs linter
-    .cmd cargo +stable clippy --all-targets
+    .cmd cargo +stable clippy --all-targets -- -D warnings
 
   .cov
     .desc Generates code coverage report in text format
@@ -63,6 +64,10 @@
     .desc Builds the manual from its markdown files
     .cmd mdbook build
       .dir manual
+
+  .pedantic
+      .desc Runs pedantic linter
+      .cmd cargo +stable clippy --all-targets -- -D warnings -W clippy::pedantic -W clippy::nursery
 
   .readme
     .desc Recreates README file
