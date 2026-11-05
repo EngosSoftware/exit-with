@@ -12,6 +12,7 @@
     .task clippy
     .task pedantic
     .task test
+    .task doc
     .task cov
 
   .build
@@ -60,7 +61,7 @@
     .cmd cargo {{RUST_TOOLCHAIN}} fmt
 
   .install
-    .desc Installs task commander from local sources
+    .desc Installs binary built from local sources
     .cmd cargo {{RUST_TOOLCHAIN}} install exit-with --path . --force
 
   .manual
@@ -69,8 +70,8 @@
       .dir manual
 
   .pedantic
-      .desc Runs pedantic linter
-      .cmd cargo {{RUST_TOOLCHAIN}} clippy --all-targets -- -D warnings -W clippy::pedantic -W clippy::nursery
+    .desc Runs pedantic linter
+    .cmd cargo {{RUST_TOOLCHAIN}} clippy --all-targets -- -D warnings -W clippy::pedantic -W clippy::nursery
 
   .readme
     .desc Recreates README file
@@ -93,5 +94,5 @@
     .cmd cargo {{RUST_TOOLCHAIN}} nextest run
 
   .uninstall
-    .desc Uninstalls previously installed task commander
+    .desc Uninstalls previously installed binary
     .cmd cargo {{RUST_TOOLCHAIN}} uninstall exit-with

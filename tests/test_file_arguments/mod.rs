@@ -247,3 +247,15 @@ fn _0018() {
         .stderr("")
         .execute();
 }
+
+#[test]
+fn _0019() {
+    cli_assert::command!()
+        .arg("0")
+        .arg("empty")
+        .success()
+        .code(0)
+        .stdout("empty\n")
+        .stderr("")
+        .execute();
+}
