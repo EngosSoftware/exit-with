@@ -1,4 +1,4 @@
-.note These task definitions require Task Commander.
+.note These task definitions require TaskCommander.
       Install it using cargo:
       `cargo install task-commander`
 
